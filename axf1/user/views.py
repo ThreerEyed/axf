@@ -1,11 +1,13 @@
 import random
 import re
+from datetime import datetime, timedelta
+
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from user.models import UserModel, UserTicketModel
+# from user.models import UserModel, UserTicketModel
 
 
 def register(request):
@@ -68,9 +70,8 @@ def login(request):
                     a = random.choice(s)
                     ticket += a
                 response.set_cookie('ticket', ticket)
-                UserTicketModel.ticket = ticket
-
-
+                out_time = datetime.now() + timedelta(hours=8)
+                UserTicketModel.objects.create(user_id=user.id, ticket=ticket, out_time=out_time)
                 return HttpResponseRedirect(reverse('app1:home'))
             return render(request, 'user/user_login.html', {'msg': '用户名或密码错误'})
         else:

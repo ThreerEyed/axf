@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from app1.models import MainWheel, MainNav, MainMustBuy, MainShop, MainShow
+# from app1.models import MainWheel, MainNav, MainMustBuy, MainShop, MainShow
 
 
 def home(request):
