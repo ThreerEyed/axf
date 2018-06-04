@@ -1,0 +1,58 @@
+{% extends 'user/base_user.html' %}
+{% load static %}
+
+{% block EXTJS %}
+{#    {{ block.super }}#}
+{#    <script type="text/javascript" src="{% static 'app/user/js/user_register.js' %}"></script>#}
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">用户</label>
+                <input id="username" type="text" name="username" class="form-control" placeholder="用户名">
+                <span id="username_info">{{ msg1 }}</span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">邮箱</label>
+                <input type="email" name="email" class="form-control" placeholder="邮箱">
+                <span id="username_info">{{ msg2 }}</span>
+            </div>
+            <div class="form-group">
+                <label for="sex">性别</label>
+                <select name="sex" id="sex">
+                    <option value="1">男</option>
+                    <option value="0">女</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">密码</label>
+                <input id="password" type="password" name="password" class="form-control" placeholder="密码">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">确认密码</label>
+                <input id="password_confirm" type="password" class="form-control" placeholder="确认密码" name="password1">
+                <span id="password_confirm_info">{{ msg3 }}</span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">头像</label>
+                <input name="icon" type="file">
+            </div>
+            <div>
+                <span style="color: red;">{{ msg }}</span>
+            </div>
+
+            <input type="submit" class="btn btn-success btn-block" value="注册">
+        </form>
+
+
+    </div>
+
+
+
+{% endblock %}
