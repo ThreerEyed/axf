@@ -1,8 +1,7 @@
 import random
 import re
-
 from django.contrib.auth.hashers import make_password, check_password
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -48,34 +47,35 @@ def register(request):
 
 
 def login(request):
+    """
+    登录
+    :param request:
+    :return:
+    """
 
     if request.method == 'GET':
 
         return render(request, 'user/user_login.html')
 
     if request.method == 'POST':
+        if UserModel.objects.filter(username=request.POST.get('username')).exists():
+            user = UserModel.objects.filter(username=request.POST.get('username')).first()
+            if check_password(request.POST.get('password'), user.password):
+                response = HttpResponse()
+                ticket = ''
+                s = 'abcdefghijkrmnopqrstuvwxyz1234567890'
+                for _ in range(28):
+                    a = random.choice(s)
+                    ticket += a
+                response.set_cookie('ticket', ticket)
+                UserTicketModel.ticket = ticket
 
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = ''
-        if check_password(password, UserModel.password):
 
-            a = UserModel.objects.filter(username=username, password=password).first()
-            user = a
+                return HttpResponseRedirect(reverse('app1:home'))
+            return render(request, 'user/user_login.html', {'msg': '用户名或密码错误'})
+        else:
+            return render(request, 'user/user_login.html', {'msg': '用户名或密码错误'})
 
-        if not user:
-            msg = '账号或密码不正确'
-            return render(request, 'user/user_login.html', {'msg': msg})
-
-        ticket = ''
-        s = 'abcdefghijkrmnopqrstuvwxyz1234567890'
-        for _ in range(28):
-            a = random.choice(s)
-            ticket += a
-
-        UserTicketModel.ticket = ticket
-        response = HttpResponseRedirect(reverse('app1:home'))
-        response.set_cookie('ticket', ticket)
 
 
 
