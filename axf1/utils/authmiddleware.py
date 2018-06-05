@@ -6,11 +6,10 @@ from django.shortcuts import render
 from django.utils.deprecation import MiddlewareMixin
 from django.core.urlresolvers import reverse
 
+from user.models import UserTicketModel, UserModel
+
 
 # 定义中间件这个类
-from user.models import UserTicketModel
-
-
 class UserAuthMiddle(MiddlewareMixin):
 
     def process_request(self, request):
@@ -31,19 +30,21 @@ class UserAuthMiddle(MiddlewareMixin):
         if not ticket:
             return HttpResponseRedirect(reverse('user:login'))
 
-        user = UserTicketModel.objects.filter(ticket=ticket).first()
+        user_ticket = UserTicketModel.objects.filter(ticket=ticket).first()
         out_time = datetime.utcnow()
-        if out_time > user.out_time.replace(tzinfo=None):
-            UserTicketModel.objects.filter(user=user).delete()
+        if out_time > user_ticket.out_time.replace(tzinfo=None):
+            UserTicketModel.objects.filter(user=user_ticket).delete()
             return HttpResponseRedirect(reverse('user:login'))
         else:
-            UserTicketModel.objects.filter(Q(user_id=user.user_id) &
+            # 删除多余的信息, 从userticket 中查询当前的user 并且ticjet不等于cookie中deticket
+            UserTicketModel.objects.filter(Q(user_id=user_ticket.user_id) &
                                            ~Q(ticket=ticket)).delete()
-        if not user:
+        if not user_ticket:
             return HttpResponseRedirect(reverse('user:login'))
+        user = UserModel.objects.filter(id=user_ticket.user_id).first()
 
         request.user = user
-        # 删除多余的信息, 从userticket 中查询当前的user 并且ticjet不等于cookie中deticket
+
 
 
 

@@ -77,6 +77,7 @@ def login(request):
                 ticket = get_ticket()
                 # 绑定cookies 的ticket
                 response = HttpResponseRedirect(reverse('app1:home'))
+                # timedelta 是时间差, 此处意为out_time的时间等于现在的时间加上一个时间差
                 out_time = datetime.utcnow() + timedelta(hours=8)
                 response.set_cookie('ticket', ticket, expires=out_time)
                 UserTicketModel.objects.create(user_id=user.id, ticket=ticket, out_time=out_time)
