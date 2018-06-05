@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^cart/', views.cart, name='cart'),
     # 超市
     url(r'^market/', views.market, name='market'),
-    # mine
+    # 个人中心
     url(r'^mine/', views.mine, name='mine'),
     # 用户订单
     url(r'^order_info/', views.order_info, name='order_info'),

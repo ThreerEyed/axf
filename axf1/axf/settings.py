@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'utils.authmiddleware.UserAuthMiddle'
 ]
 
 ROOT_URLCONF = 'axf.urls'
@@ -132,3 +133,6 @@ STATICFILES_DIRS = [
 # 指定媒体文件路径
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 没有登录的话 跳转登录地址
+LOGIN_URL = '/user/user_login/'
