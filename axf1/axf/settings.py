@@ -135,4 +135,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # 没有登录的话 跳转登录地址
-LOGIN_URL = '/user/user_login/'
+LOGIN_URL = '/user/login/'

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -33,7 +33,7 @@ class UserAuthMiddle(MiddlewareMixin):
         user_ticket = UserTicketModel.objects.filter(ticket=ticket).first()
         out_time = datetime.utcnow()
         if out_time > user_ticket.out_time.replace(tzinfo=None):
-            UserTicketModel.objects.filter(user=user_ticket).delete()
+            UserTicketModel.objects.filter(user_id=user_ticket.user_id).first().delete()
             return HttpResponseRedirect(reverse('user:login'))
         else:
             # 删除多余的信息, 从userticket 中查询当前的user 并且ticjet不等于cookie中deticket
