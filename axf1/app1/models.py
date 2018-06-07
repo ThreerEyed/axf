@@ -132,9 +132,6 @@ class Goods(models.Model):
         db_table = 'axf_goods'
 
 
-
-
-
 class CartModel(models.Model):
 
     # 关联用户
@@ -173,6 +170,4 @@ class OrderGoodsModel(models.Model):
 
     class Meta:
         db_table = 'axf_order_goods'
-
-
 

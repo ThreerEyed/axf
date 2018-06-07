@@ -90,7 +90,7 @@ def login(request):
 def logout(request):
 
     if request.method == 'GET':
-        response = HttpResponseRedirect(reverse('user:login'))
+        response = HttpResponseRedirect(reverse('app1:mine'))
         response.delete_cookie('ticket')
 
         return response

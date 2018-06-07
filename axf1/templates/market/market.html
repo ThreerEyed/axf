@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block EXTJS %}
-    <script type="text/javascript" src="{% static 'app/market/js/market.js' %}"></script>
+{#    <script type="text/javascript" src="{% static 'app/market/js/market.js' %}"></script>#}
+    <script type="text/javascript" src="{% static 'app/common/function.js' %}"></script>
 {% endblock %}
 
 
@@ -45,6 +46,7 @@
 
             <menu>
                 <ul>
+                {% csrf_token %}
                     {% for gds in goods %}
                     <!--商品信息展示-->
                         <li>
@@ -66,9 +68,19 @@
                                 </div>
                             </a>
                         <section>
-                            <button goodsid="" class="subShopping">-</button>
-                            <span>0</span>
-                            <button goodsid="" class="addShopping">+</button>
+                            <button class="subShopping" onclick="subCart({{ gds.id }})">-</button>
+                            {% if user_cart %}
+                                {% for cart in user_cart %}
+                                    {% ifequal cart.goods.id gds.id %}
+                                        <span id="num_{{ gds.id }}">{{ cart.c_num }}</span>
+                                    {% else %}
+                                        <span id="num_{{ gds.id }}">0</span>
+                                    {% endifequal %}
+                                {% endfor %}
+                            {% else %}
+                                    <span id="num_{{ gds.id }}">0</span>
+                            {% endif %}
+                            <button class="addShopping" onclick="addCart({{ gds.id }})">+</button>
                         </section>
                         </li>
                     <!--处理数据结束-->

@@ -5,22 +5,27 @@
 {% block content %}
 
     <h3>待付款订单列表</h3>
-
+    {% for order in orders %}
     <ul>
         <!--订单信息展示-->
             <li>
                 <a href="">
-                    <p><!-- 订单id --></p>
+                    <p><!-- 订单id -->订单编号: {{ order.o_num }}</p>
                     <p><!-- 数量 --></p>
-                        <!--展示商品的名称-->
+                    {% for order_goods in order.ordergoodsmodel_set.all %}
+                        <!--展示商品的名称-->商品名:
+                        {{ order_goods.goods.productname }}
                         <li>
-                            <img src="" alt="">
+                            <a href="{% url 'app1:pay_my_goods' %}?order_id={{ order.id }}">
+                            <img src="{{ order_goods.goods.productimg }}" alt="">
+                            </a>
                         </li>
                         <!--处理结束-->
+                    {% endfor %}
                 </a>
             </li>
         <!--订单处理结束-->
-
+    {% endfor %}
 
     </ul>
 
