@@ -43,12 +43,13 @@ function subCart(goods_id){
             if(msg.code == '200'){
                  $('#num_' + goods_id).text(msg.c_num)
                  count_all()
+                if(msg.c_num == 0){
+                $('#goods_id_' + goods_id ).remove()
+            }
             }else{
                 alert(data.msg)
             }
-            if(msg.c_num == 0){
-                $('#myCart').parent.remove()
-            }
+
         },
         error: function (msg) {
             alert('请求失败')

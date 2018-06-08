@@ -7,7 +7,7 @@
 
 {% block EXTJS %}
     {{ block.super }}
-    <script type="text/javascript" src="{% static 'app/cart/js/cart.js' %}"></script>
+{#    <script type="text/javascript" src="{% static 'app/cart/js/cart.js' %}"></script>#}
     <script type="text/javascript" src="{% static 'app/common/function.js' %}"></script>
 {% endblock %}
 
@@ -58,9 +58,10 @@
                     <ul>
                         <!--购物车信息展示-->
                         {% csrf_token %}
-                        {% for cart in user_carts %}
-                            <div>
-                            <li class="menuList" id="num_{{ cart.goods.id }}">
+
+                           {% for cart in user_carts %}
+                            <div  id="goods_id_{{ cart.goods.id }}">
+                            <li class="menuList">
                                 <div class="confirm">
                                     <span>
                                         {% if cart.is_select == 1 %}
@@ -74,6 +75,7 @@
                                 <a href="#">
                                     <img src="{{ cart.goods.productimg }}" alt="">
                                     <p>{{ cart.goods.productlongname }}</p>
+                                    <p style="color: red;">&nbsp;&nbsp;&nbsp;￥{{ cart.goods.price }}</p>
                                 </a>
                                 <section>
                                     <button onclick="subCart({{ cart.goods.id }})">-</button>
@@ -82,8 +84,9 @@
                                 </section>
                             </li>
                             </div>
+                            {% endfor %}
                         <!--购物车数据处理结束-->
-                        {% endfor %}
+
 
                         <li class="payTheBill">
 

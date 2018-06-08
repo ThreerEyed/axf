@@ -16,13 +16,18 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import static
+from django.views.static import serve
 
+from app1 import views
 from axf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^app1/', include('app1.urls', namespace='app1')),
     url(r'^user/', include('user.urls', namespace='user')),
+    url(r'^$', views.home),
+    # 部署时用到的路由
+    url(r'^static(?P<path>.*)$', serve, {"document_root": settings.STATICFILES_DIRS[0]}),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -225,9 +225,9 @@ def change_all(request):
 
         user = request.user
         user_cart = CartModel.objects.filter(user=user)
-
-        for i in user_cart:
-            pass
+        for cart in user_cart:
+            cart.is_select = True
+            cart.save()
 
 
 def change_order_status(request):

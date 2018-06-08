@@ -127,7 +127,7 @@ USE_TZ = True
 # 静态文件配置
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static')
 ]
 
 # 指定媒体文件路径

@@ -38,4 +38,7 @@ urlpatterns = [
     # 总价
     url(r'^allPrice/', views.all_price, name='all_price'),
 
+    # 全选
+    url(r'^changeAll/', views.change_all, name='change_all')
+
 ]
